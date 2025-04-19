@@ -1,0 +1,65 @@
+body{
+    padding: 0px;
+    margin: 0px;
+    /* background: skyblue; */
+}
+
+.loginForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, .7);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+    padding-bottom: 5px;
+}
+
+.loginContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* border-radius: 20px; */
+}
+
+input{
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.loginButton{
+    margin: 10px;
+    width: 200px;
+    background: green;
+    color: white;
+    /* padding: 5px; */
+    border-radius: 10px;
+    transform: translateY(-50%);
+
+}                                
+
+.haveNotAccount .signupLink{
+    text-decoration: none;
+    color: aqua;
+}
+
+.haveNotAccount .signupLink:hover {
+    text-decoration: underline;
+}
+
+.loginHeading, .haveNotAccount{
+    color: white;
+}
+
+.forgotPassword{
+    color: white;
+    text-decoration: none;
+    margin-top: 5px;
+}
+
+.forgotPassword:hover{
+    text-decoration: underline;
+}
