@@ -13,15 +13,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    {/* <App /> */}
-    {/* <Home />
-    <SignUp />
-    <Login />
-    <Nest />
-    <Grocery />
-    <Clothings />
-    <Electronics /> */}
-
     <BrowserRouter basename="/E-Commerce">
       <Routes>
         <Route path='/' element={<Home />} />
@@ -31,7 +22,6 @@ createRoot(document.getElementById('root')).render(
         <Route path='/nest' element={<Nest />} />
         <Route path='/clothings' element={<Clothings />} />
         <Route path='/electronics' element={<Electronics />} />
-          
       </Routes>
     </BrowserRouter>
     

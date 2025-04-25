@@ -9,7 +9,7 @@ export default function Home() {
   
 
   const slides = [
-    { id: "1", image: "/Banner_Images/Home.png", },
+    { id: "1", image: "/E-Commerce/Banner_Images/Home.png", },
     { id: "2", image: "/Banner_Images/Nest.png", },
     { id: "3", image: "/Banner_Images/Grocery.png", },
     { id: "4", image: "/Banner_Images/Clothings.png", },
