@@ -22,7 +22,7 @@ createRoot(document.getElementById('root')).render(
     <Clothings />
     <Electronics /> */}
 
-    <BrowserRouter>
+    <BrowserRouter basename="/E-Commerce">
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/signup' element={<SignUp />} />
