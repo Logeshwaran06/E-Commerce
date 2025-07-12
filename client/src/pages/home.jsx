@@ -156,17 +156,17 @@ export default function Home() {
         </div>
 
         {/* Sections */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-6 bg-white rounded-lg shadow mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-6 pl-10 pr-10 bg-white rounded-lg shadow mt-6">
           {sections.map((section) => {
             const Icon = section.img;
             return (
               <div
                 key={section.id}
-                className="flex flex-col items-center text-center p-4 rounded-lg border border-gray-300 bg-gray-50 cursor-pointer shadow-sm hover:shadow-md transition"
+                className="flex flex-col justify-center items-center text-center p-4 rounded-lg border border-gray-300 h-[180px] bg-gray-50 cursor-pointer shadow-sm hover:shadow-md transition"
               >
-                <Icon className="w-10 h-10 mb-2 text-blue-600" />
+                <Icon className="w-10 h-10 mb-4 text-blue-600" />
                 <h2 className="font-semibold text-lg">{section.title}</h2>
-                <p className="text-sm text-gray-600 mt-1">{section.description}</p>
+                <p className="text-sm text-gray-600 mt-2">{section.description}</p>
               </div>
             );
           })}
