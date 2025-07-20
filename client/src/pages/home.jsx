@@ -1,14 +1,17 @@
 import {Search, ShoppingCart, MonitorSmartphone, Shirt, AppleIcon, CookingPot } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {useNavigate} from "react-router-dom"
 import Header from "../component/shared/Header";
 import Footer from "../component/shared/Footer";
-// import { useState, useNav } from "react";
 
 export default function Home() {
 
   const navigate = useNavigate();
   
+  const [ currentSlide, setCurrentSlide ] = useState(0);
+  const [ isPaused, setIsPaused ] = useState(false);
+  const [ touchStart, setTouchStart ] = useState(0);
+  const productRef = useRef(null);
 
   const slides = [
     { id: "1", image: "/E-Commerce/Banner_Images/Home.png", },
@@ -126,15 +129,41 @@ export default function Home() {
     },
   ];
   
-  const { currentSlide, setCurrentSlide} = useState(0);
 
   useEffect(() => {
+    if (isPaused) return;
+    // Automatically change slides every 2 seconds
     const timer = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-    }, 2000)
+    }, 3000)
 
     return () => clearInterval(timer);
-  }, [slides.length]);
+  }, [isPaused, slides.length]);
+
+  const handleTouchStart = (e) => {
+    setTouchStart(e.touches[0].clientX);
+  };  
+
+  const handleTouchEnd = (e) => {
+    const touchEnd = e.changedTouches[0].clientX; 
+    const diff = touchStart - touchEnd;
+
+    if (diff > 50) {
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
+    } else if (diff < -50) {
+      setCurrentSlide((prevSlide) => (prevSlide - 1 + slides.length) % slides.length);
+    }
+  }
+
+  const scrollToProduct = () => {
+    if (productRef.current) {
+      const topOffset = productRef.current.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({
+        top: topOffset,
+        behavior: "smooth",
+      });
+    }
+  }
 
   return (
     <>
@@ -143,17 +172,48 @@ export default function Home() {
         <Header />
 
         {/* Carousel Section */}
-        <div className="overflow-hidden relative">
-          <div className="flex animate-slide">
+        <div 
+          className="overflow-hidden relative group" 
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          >
             {slides.map((slide) => (
-              <div key={slide.id} className="min-w-fit"> 
-                <img src={slide.image} alt={`Slide ${slide.id}`} className="w-full h-[22rem] object-cover" />
-                <div className="absolute left-9 bottom-8 bg-yellow-400 p-2 rounded-lg font-bold cursor-pointer">Shop Now</div>
-
+              <div key={slide.id} className="min-w-full h-[28rem] relative">
+                <img
+                  src={slide.image}
+                  alt={`Slide ${slide.id}`}
+                  className="w-full h-full"
+                />
+                <div 
+                  className="absolute left-[75px] bottom-10 bg-yellow-400 p-2 rounded-lg font-bold cursor-pointer"
+                  onClick={scrollToProduct}
+                >
+                  Shop Now
+                </div>
               </div>
             ))}
           </div>
-        </div>
+
+          {/* Dot Navigation */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            {slides.map((_, idx) => (
+              <div
+                key={idx}
+                className={`h-3 w-3 rounded-full cursor-pointer ${
+                  currentSlide === idx ? "bg-yellow-400" : "bg-white"
+                }`}
+                onClick={() => setCurrentSlide(idx)}
+              />
+            ))}
+          </div>
+      </div>
+
 
         {/* Sections */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-6 pl-10 pr-10 bg-white rounded-lg shadow mt-6">
@@ -174,6 +234,7 @@ export default function Home() {
 
         {/* Products */}
         <div className="p-6  mx-auto">
+          <div ref={productRef} className="mb-4"></div>
           <h2 className="text-2xl font-bold mb-4">All Products</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {productDetails.map((product) => (
